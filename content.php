@@ -21,7 +21,7 @@
 
 	<?php	if(Cyberchimps_Helper::cyberchimps_get_option('sidebar_images')=="three-column")
 		{
-			ifeature_featured_image_content();
+			ifeature_featured_image();
 		}?>
 		<?php cyberchimps_post_format_icon();
 
