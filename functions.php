@@ -700,9 +700,7 @@ function ifeature_add_custmozier_field( $wp_customize ) {
 		$wp_customize->add_setting(
 			'cyberchimps_options[ifeature_menu_design]',
 			array(
-				'default'           => array(
-					'default' => get_template_directory_uri() . '/inc/css/menu/images/default.jpg',
-				),
+				'default'           => get_template_directory_uri() . '/inc/css/menu/images/default.jpg',
 				'type'              => 'option',
 				'sanitize_callback' => 'cyberchimps_text_sanitization',
 			)
@@ -1344,15 +1342,14 @@ add_action( 'enqueue_block_editor_assets', 'ifeature_block_styles' );
  */
 function ifeature_menu_design_styles() {
 	$skin = Cyberchimps_Helper::cyberchimps_get_option( 'ifeature_menu_design' );
-	if ( ! is_array( $skin ) ) {
+	if ( !empty( $skin ) && $skin != '' && $skin != 'default' ) { //phpcs:ignore
 		wp_enqueue_style( 'ifeature-menu-design', get_template_directory_uri() . '/inc/css/menu/' . $skin . '.css', array( 'style' ), '1.0' );
 	}
-
 	$skin = Cyberchimps_Helper::cyberchimps_get_option( 'cyberchimps_skin_color' );
 
-	if ( '' == Cyberchimps_Helper::cyberchimps_get_option( 'flat_gradient_selector' ) ) { //phpcs:ignore
-		if ( ! is_array( $skin ) ) {
+	if ( '' == Cyberchimps_Helper::cyberchimps_get_option( 'flat_gradient_selector' ) && !empty( $skin ) ) { //phpcs:ignore
 			$skin = $skin . '-nongrad.css';
+		if ( 'default-nongrad.css' !== $skin ) {
 			wp_enqueue_style( 'ifeature-non-gradient-design', get_template_directory_uri() . '/inc/css/skins/' . $skin, array( 'style' ), '1.0' );
 		}
 	}
